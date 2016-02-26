@@ -89,7 +89,7 @@ $(document).ready(function() {
 			        "nome":     $('#nome').val(),
 			        "telefone": $('#telefone').val(),
 			        "email":    $('#email').val(),
-			        "assunto" : $('#assunto').val(),
+			        "descricao" : $('#assunto').val(),
 			        "paginas" : JSON.parse(localStorageFunctions.getLocalStorage()).pageList
 			    }
 			},
