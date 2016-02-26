@@ -50,12 +50,68 @@ $(document).ready(function() {
 			localStorageContent = JSON.stringify(obj);
 			return localStorageContent;
 		};
+		//ENVIA OS DADOS PARA O SERVIDOR
+		var _sendForm = function() {
+			console.log('Enviando Dados');
+			var contato = {
+				nome: $('#nome').val(),
+				telefone: $('#telefone').val(),
+				email: $('#email').val(),
+				assunto: $('#assunto').val(),	
+				paginas: JSON.parse(localStorageFunctions.getLocalStorage()).pageList	
+			};
+			$.ajax({
+		        url: "http://localhost:3000/contatos.json",
+		        type: "POST",
+		        data: {
+				    "contato": 
+				    {
+				        "nome"      : contato.nome,
+				        "telefone"  : contato.telefone,
+				        "email"     : contato.email,
+				        "descricao" : contato.assunto,
+				        "paginas"   : contato.paginas  
+				    }
+				},
+		        datatype: 'json',
+		        success: function (data) {
+					executeApi(data.email);
+		        }
+		    });
+		};
+	    //ATUALIZA AS PÁGINAS ACESSADAS DO CLIENTE JÁ CADASTRADO
+	    var _updateForm = function() {
+	    	console.log('Atualizando Dados');
+			var contato = {
+				email: JSON.parse(localStorageFunctions.getLocalStorage()).email,
+				paginas: JSON.parse(localStorageFunctions.getLocalStorage()).pageList	
+			};
+			console.log('atualizando email: ' + contato.email);
+			contato.paginas.forEach(function(item) {console.log('atualizando página: ' + item.pageName)});
+			$.ajax({
+		        url: "http://localhost:3000/paginas.json",
+		        type: "POST",
+		        data: {
+				    "contato": 
+				    {
+				        "email"     : contato.email,
+				        "paginas"   : contato.paginas  
+				    }
+				},
+		        datatype: 'json',
+		        success: function (data) {
+					executeApi(data.email);
+		        }
+		    });
+	    };		
 		return {
-			insert : _insert,
-			update : _update
+			insert     : _insert,
+			update     : _update,
+			sendForm   : _sendForm,
+			updateForm : _updateForm
 		}
 	})();
-
+	//FUNÇÃO QUE EXECUTA A APLICAÇÃO
 	var executeApi = function(email) {
 		var localStorageContent = localStorageFunctions.getLocalStorage();
 		if(!localStorageContent) {
@@ -64,41 +120,23 @@ $(document).ready(function() {
 		} else {
 		//SE HOUVER COOKIE
 			if(email) {
-				localStorageContent = apiContatos.update(localStorageContent, email, $('#pageTitle').html(), $(location).attr('href'), new Date());	
+				localStorageContent = apiContatos.update(localStorageContent, email, $('#pageTitle').html(), $(location).attr('href'), new Date());					
 			} else {
 				localStorageContent = apiContatos.update(localStorageContent, JSON.parse(localStorageContent).email, $('#pageTitle').html(), $(location).attr('href'), new Date());	
 			}
 		}
 		localStorageFunctions.setLocalStorage(localStorageContent);
 		console.log(localStorageFunctions.getLocalStorage());
+
+		//ENVIA OS DADOS PARA O SERVIDOR CASO O CLIENTE JÁ TENHA ENTRADO EM CONTATO
+		if(JSON.parse(localStorageContent).email) {
+			console.log('Tem email: ' + JSON.parse(localStorageContent).email);
+			apiContatos.updateForm();
+		}
 	};
-	
+	//BOTÃO DE ENVIO DO CADASTRO
 	$('#btEnviar').click(function() {
-		var contato = {
-			nome: $('#nome').val(),
-			telefone: $('#telefone').val(),
-			email: $('#email').val(),
-			assunto: $('#assunto').val(),			
-		};
-		$.ajax({
-	        url: "http://localhost:3000/contatos.json",
-	        type: "POST",
-	        data: {
-			    "contato": 
-			    {
-			        "nome":     $('#nome').val(),
-			        "telefone": $('#telefone').val(),
-			        "email":    $('#email').val(),
-			        "descricao" : $('#assunto').val(),
-			        "paginas" : JSON.parse(localStorageFunctions.getLocalStorage()).pageList
-			    }
-			},
-	        datatype: 'json',
-	        success: function (data) {
-	            console.log('Enviando dados... ');
-				executeApi(data.email);
-	        }
-	    });
+		apiContatos.sendForm();
 	});	
 
 	executeApi();
