@@ -1,5 +1,6 @@
 //LOCAL STORAGE
 $(document).ready(function() {
+
 	//FUNÇÕES DO LOCALSTORAGE
 	var localStorageFunctions = (function() {
 		//NOME DO OBJETO QUE CONTEM OS DADOS NO LOCALSTORAGE
@@ -17,6 +18,7 @@ $(document).ready(function() {
 			setLocalStorage : _setLocalStorage
 		}
 	})();
+
 	//FUNÇÕES DA API DE CONTATOS
 	var apiContatos = (function() {
 		//INSERE OS DADOS NO LOCALSTORAGE
@@ -53,7 +55,7 @@ $(document).ready(function() {
 			update : _update
 		}
 	})();
-	//FUNÇÃO PRINCIPAL - EXECUTA TODA A REGRA
+
 	var executeApi = function(email) {
 		var localStorageContent = localStorageFunctions.getLocalStorage();
 		if(!localStorageContent) {
@@ -93,10 +95,12 @@ $(document).ready(function() {
 			},
 	        datatype: 'json',
 	        success: function (data) {
+	            console.log('Enviando dados... ');
 				executeApi(data.email);
 	        }
 	    });
 	});	
-	//INICIALIZA A APLICAÇÃO
+
 	executeApi();
+	
 });
