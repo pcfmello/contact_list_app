@@ -56,7 +56,10 @@ $(document).ready(function() {
 			localStorageContent = JSON.stringify(obj);
 			return localStorageContent;
 		};
+<<<<<<< HEAD
 	
+=======
+>>>>>>> eacc954162c3af3157054ba449c3f1114e3b363e
 		//ENVIA OS DADOS PARA O SERVIDOR
 		var _sendForm = function() {
 			console.log('Enviando Dados');
@@ -86,7 +89,10 @@ $(document).ready(function() {
 		        }
 		    });
 		};
+<<<<<<< HEAD
 	
+=======
+>>>>>>> eacc954162c3af3157054ba449c3f1114e3b363e
 	    //ATUALIZA AS PÁGINAS ACESSADAS DO CLIENTE JÁ CADASTRADO
 	    var _updateForm = function() {
 	    	console.log('Atualizando Dados');
@@ -119,7 +125,10 @@ $(document).ready(function() {
 			updateForm : _updateForm
 		}
 	})();
+<<<<<<< HEAD
 	
+=======
+>>>>>>> eacc954162c3af3157054ba449c3f1114e3b363e
 	//FUNÇÃO QUE EXECUTA A APLICAÇÃO
 	var executeApi = function(email) {
 		var localStorageContent = localStorageFunctions.getLocalStorage();
@@ -143,7 +152,10 @@ $(document).ready(function() {
 			apiContatos.updateForm();
 		}
 	};
+<<<<<<< HEAD
 
+=======
+>>>>>>> eacc954162c3af3157054ba449c3f1114e3b363e
 	//BOTÃO DE ENVIO DO CADASTRO
 	$('#btEnviar').click(function() {
 		apiContatos.sendForm();
