@@ -4,7 +4,7 @@ class CreateContatos < ActiveRecord::Migration
       t.string :nome
       t.string :telefone
       t.string :email
-      t.text :descricao
+      t.text :assunto
 
       t.index :email, unique: true #CRIA UM ÍNDICE E O DEIXA ÚNICO
 

@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  email: MyString
-  nome: 
+  nome: MyString
   url: MyString
-  data_de_acesso: 2016-02-25
+  data_acesso: 2016-02-27 04:27:43
+  contato_id: 
 
 two:
-  email: MyString
-  nome: 
+  nome: MyString
   url: MyString
-  data_de_acesso: 2016-02-25
+  data_acesso: 2016-02-27 04:27:43
+  contato_id: 

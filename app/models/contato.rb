@@ -1,4 +1,11 @@
 class Contato < ActiveRecord::Base
+	
+	include ActiveModel::ForbiddenAttributesProtection
+	
+	#RELACIONAMENTO COM PAGINAS(1:N)
+	has_many :paginas
+
+	accepts_nested_attributes_for :paginas
 
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 

@@ -1,0 +1,33 @@
+<%= form_for(@pagina) do |f| %>
+  <% if @pagina.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pagina.errors.count, "error") %> prohibited this pagina from being saved:</h2>
+
+      <ul>
+      <% @pagina.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nome %><br>
+    <%= f.text_field :nome %>
+  </div>
+  <div class="field">
+    <%= f.label :url %><br>
+    <%= f.text_field :url %>
+  </div>
+  <div class="field">
+    <%= f.label :data_acesso %><br>
+    <%= f.datetime_select :data_acesso %>
+  </div>
+  <div class="field">
+    <%= f.label :contato_id %><br>
+    <%= f.text_field :contato_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

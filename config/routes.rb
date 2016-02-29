@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :paginas
   resources :contatos
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -11,6 +12,13 @@ Rails.application.routes.draw do
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
+
+  #PUT Route for add Contato [pcfmello@gmail.com]
+  #post 'api/adicionaContato', :controller => 'contatos', :action => 'adicionaContato'
+
+  # Route for update Contato [pcfmello@gmail.com]
+  post 'contato_update', :controller => 'contatos', :action => 'contato_update'
+  #map.car_index   "cars",     :controller => "cars", :action => "index",    :conditions => {:method => :get}
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products

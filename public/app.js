@@ -29,88 +29,70 @@ $(document).ready(function() {
 		//INSERE OS DADOS NO LOCALSTORAGE
 		var _insert = function(email, pageName, url, accessDate) {			
 			var localStorageContent = {};
-			var obj = { email : email, pageList : [] };	
-			obj.pageList.push({ pageName : pageName, url : url, accessDate : accessDate });
-			localStorageContent = JSON.stringify(obj);
+			var obj = { email : email, paginas_attributes : [] };	
+			obj.paginas_attributes.push({ nome : pageName, url : url, data_acesso : accessDate });
+			localStorageContent = obj;
 			return localStorageContent;
 		};
 	
 		//ALTERA OS DADOS NO LOCALSTORAGE
 		var _update = function(localStorageContent, email, pageName, url, accessDate) {
-			var obj = { email : email };
-			var list = JSON.parse(localStorageContent).pageList;
+			var obj = localStorageFunctions.getLocalStorage();
+			console.log('update email: ' + obj.email);
 			var index = -1;
-			list.forEach(function(item) {
-				if(item.pageName === pageName) {
-					index = list.indexOf(item);
+			obj.paginas_attributes.forEach(function(item) {
+				if(item.nome === pageName) {
+					console.log('dentro do foreach')
+					index = obj.paginas_attributes.indexOf(item);
 				}
 			});
 			//SE A PÁGINA JÁ EXISTIR, ENTÃO ALTERA. 
 			//SENÃO, ADICIONA.
 			if(index >= 0) {
-				list.splice(index, 1, { pageName : pageName, url : url, accessDate : accessDate });	
+				obj.paginas_attributes.splice(index, 1, { nome : pageName, url : url, data_acesso : accessDate });	
 			} else {
-				list.push({ pageName : pageName, url : url, accessDate : accessDate });
+				obj.paginas_attributes.push({ nome : pageName, url : url, data_acesso : accessDate });
 			}
-			obj.pageList = list;
-			localStorageContent = JSON.stringify(obj);
-			return localStorageContent;
+			
+			return obj;
 		};
-<<<<<<< HEAD
-	
-=======
->>>>>>> eacc954162c3af3157054ba449c3f1114e3b363e
+
 		//ENVIA OS DADOS PARA O SERVIDOR
 		var _sendForm = function() {
-			console.log('Enviando Dados');
 			var contato = {
 				nome: $('#nome').val(),
 				telefone: $('#telefone').val(),
 				email: $('#email').val(),
 				assunto: $('#assunto').val(),	
-				paginas: JSON.parse(localStorageFunctions.getLocalStorage()).pageList	
+				paginas_attributes: localStorageFunctions.getLocalStorage().paginas_attributes	
 			};
 			$.ajax({
 		        url: "http://localhost:3000/contatos.json",
 		        type: "POST",
 		        data: {
-				    "contato": 
-				    {
-				        "nome"      : contato.nome,
-				        "telefone"  : contato.telefone,
-				        "email"     : contato.email,
-				        "descricao" : contato.assunto,
-				        "paginas"   : contato.paginas  
-				    }
+				    "contato": JSON.stringify(contato)
 				},
 		        datatype: 'json',
 		        success: function (data) {
+		        	var obj = localStorageFunctions.getLocalStorage();
+		        	obj.email = data.email;
+		        	localStorageFunctions.setLocalStorage(obj);
 					executeApi(data.email);
 		        }
 		    });
 		};
-<<<<<<< HEAD
-	
-=======
->>>>>>> eacc954162c3af3157054ba449c3f1114e3b363e
+
 	    //ATUALIZA AS PÁGINAS ACESSADAS DO CLIENTE JÁ CADASTRADO
 	    var _updateForm = function() {
-	    	console.log('Atualizando Dados');
-			var contato = {
-				email: JSON.parse(localStorageFunctions.getLocalStorage()).email,
-				paginas: JSON.parse(localStorageFunctions.getLocalStorage()).pageList	
-			};
-			console.log('atualizando email: ' + contato.email);
-			contato.paginas.forEach(function(item) {console.log('atualizando página: ' + item.pageName)});
+	    	var paginasUpdate = { 
+				email: localStorageFunctions.getLocalStorage().email,   		
+	    		paginas_attributes: localStorageFunctions.getLocalStorage().paginas_attributes 
+	    	}
 			$.ajax({
-		        url: "http://localhost:3000/paginas.json",
+		        url: "http://localhost:3000/contato_update.json",
 		        type: "POST",
 		        data: {
-				    "contato": 
-				    {
-				        "email"     : contato.email,
-				        "paginas"   : contato.paginas  
-				    }
+				    "contato_update": JSON.stringify(paginasUpdate)
 				},
 		        datatype: 'json',
 		        success: function (data) {
@@ -125,42 +107,45 @@ $(document).ready(function() {
 			updateForm : _updateForm
 		}
 	})();
-<<<<<<< HEAD
-	
-=======
->>>>>>> eacc954162c3af3157054ba449c3f1114e3b363e
+
 	//FUNÇÃO QUE EXECUTA A APLICAÇÃO
 	var executeApi = function(email) {
 		var localStorageContent = localStorageFunctions.getLocalStorage();
 		if(!localStorageContent) {
 		//SE NÃO HOUVER COOKIE
+			console.log('nao tem cookie');
 			localStorageContent = apiContatos.insert(email, $('#pageTitle').html(), $(location).attr('href'), new Date());
 		} else {
 		//SE HOUVER COOKIE
 			if(email) {
+				console.log('tem email update');
 				localStorageContent = apiContatos.update(localStorageContent, email, $('#pageTitle').html(), $(location).attr('href'), new Date());					
 			} else {
-				localStorageContent = apiContatos.update(localStorageContent, JSON.parse(localStorageContent).email, $('#pageTitle').html(), $(location).attr('href'), new Date());	
+				console.log('nao tem email update');
+				localStorageContent = apiContatos.update(localStorageContent, localStorageContent.email, $('#pageTitle').html(), $(location).attr('href'), new Date());	
 			}
 		}
 		localStorageFunctions.setLocalStorage(localStorageContent);
-		console.log(localStorageFunctions.getLocalStorage());
 
 		//ENVIA OS DADOS PARA O SERVIDOR CASO O CLIENTE JÁ TENHA ENTRADO EM CONTATO
-		if(JSON.parse(localStorageContent).email) {
-			console.log('Tem email: ' + JSON.parse(localStorageContent).email);
+		if(localStorageFunctions.getLocalStorage().email) {
+			console.log('Tem email: ' + localStorageFunctions.getLocalStorage().email);
 			apiContatos.updateForm();
 		}
 	};
-<<<<<<< HEAD
 
-=======
->>>>>>> eacc954162c3af3157054ba449c3f1114e3b363e
 	//BOTÃO DE ENVIO DO CADASTRO
 	$('#btEnviar').click(function() {
 		apiContatos.sendForm();
 	});	
 
-	executeApi();
+	if(localStorageFunctions.getLocalStorage() && localStorageFunctions.getLocalStorage().hasOwnProperty('email')) {
+		console.log('Possui a prop email. Vai atualizar os dados')
+		executeApi(localStorageFunctions.getLocalStorage().email);	
+	} else {
+		console.log('Não possui a prop email. Vai cadastrar os dados')
+		executeApi();
+	}
+	
 	
 });
