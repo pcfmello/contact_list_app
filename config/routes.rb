@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :paginas
+  #resources :paginas
   resources :contatos
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   #post 'api/adicionaContato', :controller => 'contatos', :action => 'adicionaContato'
 
   # Route for update Contato [pcfmello@gmail.com]
-  post 'contato_update', :controller => 'contatos', :action => 'contato_update'
+  post 'contato_update', :controller => 'contatos'
   #map.car_index   "cars",     :controller => "cars", :action => "index",    :conditions => {:method => :get}
 
   # Example resource route (maps HTTP verbs to controller actions automatically):

@@ -20,6 +20,15 @@
   <%= @contato.assunto %>
 </p>
 
+<p>
+  <strong>Páginas acessadas:</strong>
+  <ul>
+  	<% @paginas.each do |pagina| %>  	
+  		<li><%= pagina.nome %></li>
+  	<% end %>
+  </ul>  	
+  
+</p>
 
 
 <%= link_to 'Edit', edit_contato_path(@contato) %> |

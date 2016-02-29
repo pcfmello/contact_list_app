@@ -1,4 +1,7 @@
 class CreatePaginas < ActiveRecord::Migration
+
+	ActiveRecord::Base.partial_updates = false
+
   def change
     create_table :paginas do |t|
       t.string :nome

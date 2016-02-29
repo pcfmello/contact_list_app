@@ -94,7 +94,7 @@ $(document).ready(function() {
 				},
 		        datatype: 'json',
 		        success: function (data) {
-					executeApi(data.email);
+					//executeApi(data.email);
 		        }
 		    });
 	    };		
@@ -137,6 +137,11 @@ $(document).ready(function() {
 		executeApi(localStorageFunctions.getLocalStorage().email);	
 	} else {
 		executeApi();
-	}	
+	}
+
+	localStorageFunctions.getLocalStorage().paginas_attributes.forEach(function(item){
+		console.log('Pagina: ' + item.nome + ' - data_acesso: ' + item.data_acesso);
+	});
+	
 	
 });
