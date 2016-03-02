@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nome:</strong>
+  <%= @contato.nome %>
+</p>
+
+<p>
+  <strong>Telefone:</strong>
+  <%= @contato.telefone %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @contato.email %>
+</p>
+
+<p>
+  <strong>Assunto:</strong>
+  <%= @contato.assunto %>
+</p>
+
+<p>
+  <strong>Páginas acessadas:</strong>
+  <ul>
+  	<% @paginas.each do |pagina| %>  	
+  		<li><%= pagina.nome %></li>
+  	<% end %>
+  </ul>  	
+  
+</p>
+
+
+<%= link_to 'Edit', edit_contato_path(@contato) %> |
+<%= link_to 'Back', contatos_path %>
