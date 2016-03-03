@@ -77,14 +77,9 @@ $(document).ready(function() {
 		        success: function (data) {
 		        	var obj = localStorageFunctions.getLocalStorage();
 		        	obj.email = data.email;
-		        	localStorageFunctions.setLocalStorage(obj);
-		        	console.log("Contao Salvo");
-		        	console.log(data);
-					//executeApi(data.email);
+		        	localStorageFunctions.setLocalStorage(obj);		        	
 		        },
-		        error: function (request, error) {
-			        console.log('Contato não salvo. Erro: ' + error);
-			    }
+		        error: function (request, error) {}
 		    });
 		};
 
@@ -101,14 +96,8 @@ $(document).ready(function() {
 				    "contato_update": JSON.stringify(paginasUpdate)
 				},
 		        datatype: 'json',
-		        success: function (data) {
-					// executeApi(data.email);
-					console.log("Contato atualizado")
-					console.log(data);
-		        },
-		        error: function (request, error) {
-			        console.log('Contato não atualizado. Erro: ' + error);
-			    }
+		        success: function (data) {},
+		        error: function (request, error) {}
 		    });
 	    };		
 		return {
@@ -126,12 +115,8 @@ $(document).ready(function() {
 		//SE NÃO HOUVER COOKIE
 			apiContatos.insert($('#pageTitle').html(), $(location).attr('href'), new Date());
 		} else {
-		//SE HOUVER COOKIE
-			if(localStorageContent.email) {
-				apiContatos.update($('#pageTitle').html(), $(location).attr('href'), new Date());					
-			} else {
-				apiContatos.update($('#pageTitle').html(), $(location).attr('href'), new Date());	
-			}
+		//SE HOUVER COOKIE			
+			apiContatos.update($('#pageTitle').html(), $(location).attr('href'), new Date());								
 		}
 		// localStorageFunctions.setLocalStorage(localStorageContent);
 
@@ -146,13 +131,6 @@ $(document).ready(function() {
 		apiContatos.sendForm();
 	});	
 
-	
 	executeApi();
-		
-	
-	localStorageFunctions.getLocalStorage().paginas_attributes.forEach(function(item){
-		console.log('Pagina: ' + item.nome + ' - data_acesso: ' + item.data_acesso);
-	});
 
-	
 });
