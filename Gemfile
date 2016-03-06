@@ -25,10 +25,13 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Para Windows 64bits
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 
+# Ferramenta para debug
 gem 'pry'
 
 #heroku
 gem 'rails_12factor', group: :production
+
+gem 'rack-cors', :require => 'rack/cors'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
