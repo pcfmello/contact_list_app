@@ -67,7 +67,7 @@ $(document).ready(function() {
 				assunto: $('#assunto').val()
 			};
 			$.ajax({
-		        url: 'http://localhost/contatos.json',
+		        url: 'https://polar-crag-62154.herokuapp.com/contatos.json',
 		        type: "POST",
 		        data: {
 				    "contato": contato
@@ -77,7 +77,7 @@ $(document).ready(function() {
 		        	localStorageFunctions.getLocalStorage().paginas_attributes.forEach(function(item) {
 		        		item.contato_id = data.id;
 		        		$.ajax({
-					        url: "http://localhost/pagina_update.json",
+					        url: "https://polar-crag-62154.herokuapp.com/pagina_update.json",
 					        type: "POST",
 					        data: {
 							    "pagina": item
@@ -116,7 +116,7 @@ $(document).ready(function() {
 				", contato ID: ".concat(pagina.contato_id));
 
 			$.ajax({
-		        url: "http://localhost/pagina_update.json",
+		        url: "https://polar-crag-62154.herokuapp.com/pagina_update.json",
 		        type: "POST",
 		        data: {
 				    "pagina": pagina
@@ -136,7 +136,7 @@ $(document).ready(function() {
 	    		//paginas_attributes: localStorageFunctions.getLocalStorage().paginas_attributes 
 	    	}
 			$.ajax({
-		        url: "http://localhost/get_contato_by_email.json",
+		        url: "https://polar-crag-62154.herokuapp.com/get_contato_by_email.json",
 		        type: "POST",
 		        data: {
 				    "contato": contato
