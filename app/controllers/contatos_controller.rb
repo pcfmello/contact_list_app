@@ -27,7 +27,7 @@ class ContatosController < ApplicationController
   # POST /contatos
   # POST /contatos.json
   def create
-    @contato = Contato.new(JSON.parse(params[:contato]))
+    @contato = Contato.new(params[:contato])
     respond_to do |format|
       if @contato.save
         format.html { redirect_to @contato, notice: 'Contato was successfully created.' }
