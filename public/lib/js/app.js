@@ -64,20 +64,37 @@ $(document).ready(function() {
 				nome: $('#nome').val(),
 				telefone: $('#telefone').val(),
 				email: $('#email').val(),
-				assunto: $('#assunto').val(),	
-				paginas_attributes: localStorageFunctions.getLocalStorage().paginas_attributes	
+				assunto: $('#assunto').val()
 			};
 			$.ajax({
-		        url: 'https://polar-crag-62154.herokuapp.com/contatos.json',
+		        url: 'http://localhost/contatos.json',
 		        type: "POST",
 		        data: {
 				    "contato": contato
 				},
 		        datatype: 'json',
 		        success: function (data) {
+		        	localStorageFunctions.getLocalStorage().paginas_attributes.forEach(function(item) {
+		        		item.contato_id = data.id;
+		        		$.ajax({
+					        url: "http://localhost/pagina_update.json",
+					        type: "POST",
+					        data: {
+							    "pagina": item
+							},
+					        datatype: 'json',
+					        success: function (data) {
+					        	
+					        },
+					        error: function (request, error) {}
+					    });
+		        	});
+
 		        	var obj = localStorageFunctions.getLocalStorage();
 		        	obj.email = data.email;
-		        	localStorageFunctions.setLocalStorage(obj);		        	
+		        	localStorageFunctions.setLocalStorage(obj);		  
+
+
 		        },
 		        error: function (request, error) {}
 		    });
@@ -99,7 +116,7 @@ $(document).ready(function() {
 				", contato ID: ".concat(pagina.contato_id));
 
 			$.ajax({
-		        url: "https://polar-crag-62154.herokuapp.com/pagina_update.json",
+		        url: "http://localhost/pagina_update.json",
 		        type: "POST",
 		        data: {
 				    "pagina": pagina
@@ -119,7 +136,7 @@ $(document).ready(function() {
 	    		//paginas_attributes: localStorageFunctions.getLocalStorage().paginas_attributes 
 	    	}
 			$.ajax({
-		        url: "https://polar-crag-62154.herokuapp.com/get_contato_by_email.json",
+		        url: "http://localhost/get_contato_by_email.json",
 		        type: "POST",
 		        data: {
 				    "contato": contato
