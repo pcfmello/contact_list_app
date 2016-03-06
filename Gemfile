@@ -25,6 +25,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Para Windows 64bits
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 
+gem 'pry'
+
 #heroku
 gem 'rails_12factor', group: :production
 

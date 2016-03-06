@@ -1,6 +1,8 @@
 class PaginasController < ApplicationController
   before_action :set_pagina, only: [:show, :edit, :update, :destroy]
 
+  skip_before_filter  :verify_authenticity_token
+
   # GET /paginas
   # GET /paginas.json
   def index
@@ -49,6 +51,18 @@ class PaginasController < ApplicationController
         format.json { render json: @pagina.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # POST /pagina_update
+  # Atualiza os dados da página conforme o acesso da mesma ou insere a mesma caso ainda não exista
+  def pagina_update
+      @pagina = Pagina.where(nome: params[:pagina][:nome], contato_id: params[:pagina][:contato_id]).take
+      if @pagina
+        Pagina.update(@pagina[:id], pagina_params)
+      else
+        Pagina.create(pagina_params)
+      end
+      render :nothing => true, :status => 200, :content_type => 'text/html'      
   end
 
   # DELETE /paginas/1

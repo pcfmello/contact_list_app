@@ -83,22 +83,53 @@ $(document).ready(function() {
 		    });
 		};
 
-	    //ATUALIZA AS PÁGINAS ACESSADAS DO CLIENTE JÁ CADASTRADO
-	    var _updateForm = function() {
-	    	var paginasUpdate = { 
-				email: localStorageFunctions.getLocalStorage().email,   		
-	    		paginas_attributes: localStorageFunctions.getLocalStorage().paginas_attributes 
-	    	}
+		//ATUALIZA OU INSERE A PÁGINA ACESSADA PELO CLIENTE NO SERVIDOR
+		var _updatePage = function(contatoId) {
+			var paginas = localStorageFunctions.getLocalStorage().paginas_attributes
+			var pagina = {};
+			paginas.forEach(function(item) {
+				if(item.nome === $('#pageTitle').html()) {
+					item.contato_id = contatoId;					
+					pagina = item;
+				}
+			});
+			console.log("Página a atualizar: Nome: ".concat(pagina.nome) + 
+				", url: ".concat(pagina.url) + 
+				", Data de acesso: ".concat(pagina.data_acesso) + 
+				", contato ID: ".concat(pagina.contato_id));
+
 			$.ajax({
-		        url: "http://localhost:3000/contato_update.json",
+		        url: "http://localhost:3000/pagina_update",
 		        type: "POST",
 		        data: {
-				    "contato_update": JSON.stringify(paginasUpdate)
+				    "pagina": pagina
 				},
 		        datatype: 'json',
-		        success: function (data) {},
+		        success: function (data) {
+		        	
+		        },
 		        error: function (request, error) {}
 		    });
+		}
+
+	    //BUSCA O ID DO CONTATO ATRAVÉS DO E-MAIL CADASTRADO
+	    var _updateForm = function() {
+	    	var contato = { 
+				email: localStorageFunctions.getLocalStorage().email
+	    		//paginas_attributes: localStorageFunctions.getLocalStorage().paginas_attributes 
+	    	}
+			$.ajax({
+		        url: "http://localhost:3000/get_contato_by_email.json",
+		        type: "POST",
+		        data: {
+				    "contato": contato
+				},
+		        datatype: 'json',
+		        success: function (data) {
+		        	_updatePage(data)
+		        },
+		        error: function (request, error) {}
+		    });	
 	    };		
 		return {
 			insert     : _insert,
@@ -116,7 +147,7 @@ $(document).ready(function() {
 			apiContatos.insert($('#pageTitle').html(), $(location).attr('href'), new Date());
 		} else {
 		//SE HOUVER COOKIE			
-			apiContatos.update($('#pageTitle').html(), $(location).attr('href'), new Date());								
+			var contatoID = apiContatos.update($('#pageTitle').html(), $(location).attr('href'), new Date());
 		}
 		// localStorageFunctions.setLocalStorage(localStorageContent);
 

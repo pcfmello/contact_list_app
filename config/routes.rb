@@ -18,6 +18,11 @@ Rails.application.routes.draw do
 
   # Route for update Contato [pcfmello@gmail.com]
   post 'contato_update', :controller => 'contatos'
+
+  # Route for getByEmail [pcfmello@gmail.com]
+  post 'get_contato_by_email', :controller => 'contatos'
+
+  post 'pagina_update', :controller => 'paginas'
   #map.car_index   "cars",     :controller => "cars", :action => "index",    :conditions => {:method => :get}
 
   # Example resource route (maps HTTP verbs to controller actions automatically):

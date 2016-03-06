@@ -39,11 +39,19 @@ class ContatosController < ApplicationController
     end
   end
 
+  # POST /get_contato_by_email.json
+  # Retorna o ID do Contato através do e-mail
+  def get_contato_by_email
+    # binding.pry
+    @contato = Contato.where(email: params[:contato][:email]).take
+    render json: @contato[:id], status: :ok, location: @contato
+  end
+
   # PATCH/PUT /contatos/1
   # PATCH/PUT /contatos/1.json
   def update
     respond_to do |format|
-      if @contato.update(params[:contato])
+      if @contato.update(contato_params)
         format.html { redirect_to @contato, notice: 'Contato was successfully updated.' }
         format.json { render :show, status: :ok, location: @contato }
       else
@@ -51,35 +59,6 @@ class ContatosController < ApplicationController
         format.json { render json: @contato.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  # POST /contato_update.json
-  def contato_update
-    contato_update = Contato.new(JSON.parse(params[:contato_update]))
-    @contato = Contato.find_by email: contato_update.email
-    
-    contato_update.paginas.each do |item| 
-      
-      @pagina = Pagina.find_by nome: item.nome, contato_id: @contato.id
-      puts "Pagina: #{@pagina.nome}"
-      if !@pagina.nil?
-        puts "Atualizar"
-        # puts "ID: #{pagina}, Pagina: #{pagina.nome}, Data/hora: #{item.data_acesso}"
-        paginaObj = {:nome => item.nome, :url => item.url, :data_acesso => item.data_acesso, :contato_id => @contato.id}
-        @pagina.update(@pagina.id, paginaObj)
-      else
-        puts "Salvar"
-        # puts "ID: #{pagina}, Pagina: #{pagina.nome}, Data/hora: #{item.data_acesso}"
-        paginaObj = {:id => pagina.id, :nome => item.nome, :url => item.url, :data_acesso => item.data_acesso, :contato_id => @contato.id}
-        @pagina.create(paginaObj)
-
-      end
-      # @pagina = {:nome => item.nome, :url => item.url, :data_acesso => item.data_acesso, :contato => @contato}
-      # puts "Pagina: #{item.nome}, Data/hora: #{item.data_acesso}"
-      # @pagina.update(@pagina)
-    end
-
-    render :nothing => true, :status => 200, :content_type => 'text/html'
   end
 
   # DELETE /contatos/1
@@ -100,14 +79,7 @@ class ContatosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def contato_params
-      # params.require(:contato).permit(:nome, :telefone, :email, :assunto, :paginas_attributes => [])
-
-      #PARAMETROS - ANTERIOR
-      params.require(:contato).permit(:nome, :telefone, :email, :assunto, :paginas => [])
-    end
-
-    def contato_update_params
-      params.require(:contato_update).permit(:email, :paginas => [])
+      params.require(contato).permit(:nome, :telefone, :email, :assunto, :paginas => [])
     end
 
 end
