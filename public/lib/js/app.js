@@ -71,7 +71,7 @@ $(document).ready(function() {
 		        url: 'https://polar-crag-62154.herokuapp.com/contatos.json',
 		        type: "POST",
 		        data: {
-				    "contato": JSON.stringify(contato)
+				    "contato": contato
 				},
 		        datatype: 'json',
 		        success: function (data) {
