@@ -73,7 +73,7 @@ $(document).ready(function() {
 		        data: {
 				    "contato": JSON.stringify(contato)
 				},
-		        datatype: 'jsonp',
+		        datatype: 'json',
 		        success: function (data) {
 		        	var obj = localStorageFunctions.getLocalStorage();
 		        	obj.email = data.email;
