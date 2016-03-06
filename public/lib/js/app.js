@@ -68,7 +68,7 @@ $(document).ready(function() {
 				paginas_attributes: localStorageFunctions.getLocalStorage().paginas_attributes	
 			};
 			$.ajax({
-		        url: 'http://localhost:3000/contatos.json',
+		        url: 'http://localhost:3000/contatos',
 		        type: "POST",
 		        data: {
 				    "contato": JSON.stringify(contato)
