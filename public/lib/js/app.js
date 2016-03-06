@@ -99,7 +99,7 @@ $(document).ready(function() {
 				", contato ID: ".concat(pagina.contato_id));
 
 			$.ajax({
-		        url: "https://polar-crag-62154.herokuapp.com/pagina_update",
+		        url: "https://polar-crag-62154.herokuapp.com/pagina_update.json",
 		        type: "POST",
 		        data: {
 				    "pagina": pagina
