@@ -1,21 +1,25 @@
 # CONTACT LIST APP
 
-Deployment instructions:
+##Deployment instructions:
 
-* Download the Contact List application or use the “git clone ...” command for your preference folder
+> * Download the Contact List application or use the “git clone ...” command for your preference folder
 
-* Open the console application and go to Contact List application folder
+> * Open the console application and go to Contact List application folder
 
-* Run “rake db:create” and after, run “rake db:migrate”
+> * Run “rake db:create” and after, run “rake db:migrate”
 
-* Run “rails server” or “rails s”
+> * Run “rails server” or “rails s”
 
-* With server in running, access the web address “http://localhost:3000”
+> * With server in running, access the web address “http://localhost:3000”
 
-* For access the contact list, go to “http://localhost:3000/contatos”
+> * For access the contact list, go to “http://localhost:3000/contatos”
 
-* For access the page list, go to “http://localhost:3000/paginas”
+> * For access the page list, go to “http://localhost:3000/paginas”
 
+##Other information
 The contact or page list will be updated when someone send the contact form in “http://localhost:3000/contato”
 
-* Ruby version : 2.3.0
+> * Ruby version : 2.3.0
+
+**Developed by**
+Paulo Cesar Ferreira de Mello | pcfmello@gmail.com
