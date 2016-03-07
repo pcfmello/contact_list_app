@@ -16,10 +16,10 @@
 
 > * For access the page list, go to “http://localhost:3000/paginas”
 
+> * Ruby version : 2.3.0
+
 ##Other information
 The contact or page list will be updated when someone send the contact form in “http://localhost:3000/contato”
 
-> * Ruby version : 2.3.0
-
-**Developed by**
-Paulo Cesar Ferreira de Mello | pcfmello@gmail.com
+###Developed by
+**Paulo Cesar Ferreira de Mello** | **pcfmello@gmail.com**
