@@ -2,7 +2,7 @@
 
 ##Deployment instructions:
 
-> * Download the Contact List application or use the “git clone ...” command for your preference folder
+> * Download the Contact List application or use the “git clone https://github.com/pcfmello/contact_list_app.git” command for your preference folder
 
 > * Open the console application and go to Contact List application folder
 
