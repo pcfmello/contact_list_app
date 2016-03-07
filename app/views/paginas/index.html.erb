@@ -19,7 +19,7 @@
         <td><%= pagina.nome %></td>
         <td><%= pagina.url %></td>
         <td><%= pagina.data_acesso %></td>
-        <td><%= pagina.contato_id %></td>
+        <td><%= pagina.contato.email %></td>
         <td><%= link_to 'Show', pagina %></td>
         <td><%= link_to 'Edit', edit_pagina_path(pagina) %></td>
         <td><%= link_to 'Destroy', pagina, method: :delete, data: { confirm: 'Are you sure?' } %></td>
