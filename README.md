@@ -1,5 +1,4 @@
 # CONTACT LIST APP
-== README
 
 Deployment instructions:
 
