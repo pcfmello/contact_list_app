@@ -1,4 +1,4 @@
-# contact_list_app
+# CONTACT LIST APP
 == README
 
 This README would normally document whatever steps are necessary to get the
@@ -22,7 +22,7 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* ...
+* .....
 
 
 Please feel free to use a different markup language if you do not plan to run
