@@ -25,16 +25,21 @@ $(document).ready(function() {
 
 	//FUNÇÕES DA API DE CONTATOS
 	var apiContatos = (function() {
-	
+		//LIMPA OS DADOS DO FORMULÁRIO
+		var _resetForm = function() {
+			$('#nome').val("");
+			$('#telefone').val("");
+			$('#email').val("");
+			$('#assunto').val("");
+		}
+
 		//INSERE OS DADOS NO LOCALSTORAGE
 		var _insert = function(pageName, url, accessDate) {						
 			var obj = { 
-				// email : localStorageFunctions.getLocalStorage().email, 
 				paginas_attributes : [] 
 			};	
 			obj.paginas_attributes.push({ nome : pageName, url : url, data_acesso : accessDate });
 			localStorageFunctions.setLocalStorage(obj);
-			// return obj;			
 		};
 	
 		//ALTERA OS DADOS NO LOCALSTORAGE
@@ -49,13 +54,11 @@ $(document).ready(function() {
 			//SE A PÁGINA JÁ EXISTIR, ENTÃO ALTERA. 
 			//SENÃO, ADICIONA.
 			if(index >= 0) {
-				//obj.paginas_attributes = [];
 				obj.paginas_attributes.splice(index, 1, { nome : pageName, url : url, data_acesso : accessDate });	
 			} else {
 				obj.paginas_attributes.push({ nome : pageName, url : url, data_acesso : accessDate });
 			}			
 			localStorageFunctions.setLocalStorage(obj);
-			// return obj;
 		};
 
 		//ENVIA OS DADOS PARA O SERVIDOR
@@ -84,24 +87,23 @@ $(document).ready(function() {
 							},
 					        datatype: 'json',
 					        success: function (data) {
-					        	
+					        	$('#modal-cadastro-ok').modal('show')
+					        	_resetForm();
 					        },
-					        error: function (request, error) {}
+					        error: function (request, error) {
+					        	$('#modal-cadastro-erro').modal('show')
+					        }
 					    });
 		        	});
-
 		        	var obj = localStorageFunctions.getLocalStorage();
 		        	obj.email = data.email;
 		        	localStorageFunctions.setLocalStorage(obj);		  
-
-
-		        },
-		        error: function (request, error) {}
+		        }		        
 		    });
 		};
 
 		//ATUALIZA OU INSERE A PÁGINA ACESSADA PELO CLIENTE NO SERVIDOR
-		var _updatePage = function(contatoId) {
+		var _sendPage = function(contatoId) {
 			var paginas = localStorageFunctions.getLocalStorage().paginas_attributes
 			var pagina = {};
 			paginas.forEach(function(item) {
@@ -119,16 +121,14 @@ $(document).ready(function() {
 		        datatype: 'json',
 		        success: function (data) {
 		        	
-		        },
-		        error: function (request, error) {}
+		        }
 		    });
 		}
 
 	    //BUSCA O ID DO CONTATO ATRAVÉS DO E-MAIL CADASTRADO
-	    var _updateForm = function() {
+	    var _getContatoByEmail = function() {
 	    	var contato = { 
 				email: localStorageFunctions.getLocalStorage().email
-	    		//paginas_attributes: localStorageFunctions.getLocalStorage().paginas_attributes 
 	    	}
 			$.ajax({
 		        url: window.location.origin.concat('/get_contato_by_email.json'),
@@ -138,16 +138,15 @@ $(document).ready(function() {
 				},
 		        datatype: 'json',
 		        success: function (data) {
-		        	_updatePage(data)
-		        },
-		        error: function (request, error) {}
+		        	_sendPage(data)
+		        }
 		    });	
 	    };		
 		return {
-			insert     : _insert,
-			update     : _update,
-			sendForm   : _sendForm,
-			updateForm : _updateForm
+			insert            : _insert,
+			update            : _update,
+			sendForm          : _sendForm,
+			getContatoByEmail : _getContatoByEmail
 		}
 	})();
 
@@ -161,11 +160,9 @@ $(document).ready(function() {
 		//SE HOUVER COOKIE			
 			var contatoID = apiContatos.update($('#pageTitle').html(), $(location).attr('href'), new Date());
 		}
-		// localStorageFunctions.setLocalStorage(localStorageContent);
-
 		//ENVIA OS DADOS PARA O SERVIDOR CASO O CLIENTE JÁ TENHA ENTRADO EM CONTATO
 		if(localStorageFunctions.getLocalStorage().email) {
-			apiContatos.updateForm();
+			apiContatos.getContatoByEmail();
 		}
 	};
 
