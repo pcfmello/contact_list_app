@@ -19,7 +19,7 @@
 > * Ruby version : 2.3.0
 
 ##Other information
-The contact or page list will be updated when someone send the contact form in “http://localhost:3000/contato”
+The contact or page list will be updated when someone send the contact form in “http://localhost:3000/contato” 
 
 ###Developed by
 **Paulo Cesar Ferreira de Mello** | **pcfmello@gmail.com**
